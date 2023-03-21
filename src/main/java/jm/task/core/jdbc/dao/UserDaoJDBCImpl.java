@@ -12,7 +12,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    Util db = new Util();
+    private Util db = new Util();
     private PreparedStatement prepStatement;
 
     private final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS users"
@@ -32,6 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     private final String CLEAR = "TRUNCATE TABLE users";
 
+    @Override
     public void createUsersTable() {
         try (Connection connection = db.getDbConnection()) {
             prepStatement = connection.prepareStatement(CREATE_TABLE);
@@ -42,6 +43,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void dropUsersTable() {
         try (Connection connection = db.getDbConnection()) {
             prepStatement = connection.prepareStatement(DROP_TABLE);
@@ -52,6 +54,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void saveUser(String name, String lastName, byte age) {
         try (Connection connection = db.getDbConnection()) {
             prepStatement = connection.prepareStatement(ADD);
@@ -65,6 +68,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void removeUserById(long id) {
         try (Connection connection = db.getDbConnection()) {
             prepStatement = connection.prepareStatement(USER_DEL + id);
@@ -75,6 +79,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public List<User> getAllUsers() {
         try (Connection connection = db.getDbConnection()) {
             List<User> userList = new ArrayList<>();
@@ -95,6 +100,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void cleanUsersTable() {
         try (Connection connection = db.getDbConnection()) {
             prepStatement = connection.prepareStatement(CLEAR);
